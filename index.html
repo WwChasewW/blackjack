@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Blackjack: Player vs. Dealer</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="casino-background"></div>
+    <header>
+        <h1>Blackjack</h1>
+        <p class="subtitle">Player vs. Dealer</p>
+    </header>
+    <main>
+        <div id="game-container">
+            <div class="table-layout green-table">
+                <div class="dealer-section">
+                    <div class="player-section" id="dealer-hand">
+                        <h2>Dealer's Hand</h2>
+                        <div class="cards-container">
+                            <div class="cards"></div>
+                        </div>
+                        <div class="total-box">
+                            Total: <span id="dealer-total"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="player-section" id="player-hand">
+                    <h2>Your Hand</h2>
+                    <div class="cards-container">
+                        <div class="cards"></div>
+                    </div>
+                    <div class="total-box">
+                        Total: <span id="player-total"></span>
+                    </div>
+                </div>
+
+                <div class="money-section">
+                    <div class="money-display">
+                        <span class="money-icon">💰</span>
+                        <span id="player-money">500</span>
+                    </div>
+                    <div class="bet-buttons">
+                        <button class="bet-btn" data-amount="100">Bet $100</button>
+                        <button class="bet-btn" data-amount="250">Bet $250</button>
+                        <button class="bet-btn" data-amount="500">Bet $500</button>
+                        <button class="bet-btn" data-amount="1000">Bet $1000</button>
+                    </div>
+                </div>
+            </div>
+            <div id="actions">
+                <button id="hit-btn" class="action-btn">Hit</button>
+                <button id="stand-btn" class="action-btn">Stand</button>
+                <button id="double-btn" class="action-btn">Double</button>
+            </div>
+            <div id="message" class="message-box"></div>
+        </div>
+        <div id="statistics" class="statistics-section">
+            <h3>Game Statistics</h3>
+            <p id="win-loss-ratio" class="stats-text"></p>
+            <p id="hands-played" class="stats-text"></p>
+        </div>
+    </main>
+    <footer>
+        <p>© 2023 Blackjack. All rights reserved.</p>
+    </footer>
+    <script src="system.js"></script>
+</body>
+</html>
