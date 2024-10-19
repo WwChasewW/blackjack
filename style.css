@@ -162,6 +162,37 @@ h2 {
     flex-shrink: 0;
 }
 
+
+.get-free {
+    padding: 10px 20px;
+    font-size: 14px;
+    background-color: #FFD700;
+    color: #1a1a2e;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+    margin: 10px auto;
+    display: block;
+}
+
+.get-free:hover {
+    background-color: #FFC300;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3);
+}
+
+.get-free:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+
+
 .total-box {
     text-align: center;
     font-size: 1em;
@@ -376,3 +407,4 @@ footer {
         font-size: 16px;
     }
 }
+

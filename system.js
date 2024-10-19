@@ -28,9 +28,15 @@ let playerMoney = 500;
 let currentBet = 0;
 
 const putCardSound = new Audio('audio/PutCard.mp3');
-const bustSound = new Audio('audio/Bust.mp4');
-const winSound = new Audio('audio/YouWin.mp4');
-const blackjackSound = new Audio('audio/BlackJack.mp4');
+const bustSound = new Audio('audio/Bust.mp3');
+const winSound = new Audio('audio/YouWin.mp3');
+const blackjackSound = new Audio('audio/BlackJack.mp3');
+const tieSound = new Audio('audio/Tie.mp3');
+
+function playSound(sound) {
+    sound.currentTime = 0;
+    sound.play();
+}
 
 function createDeck() {
     deck = [];
@@ -81,7 +87,7 @@ function renderCard(card, container) {
     cardElement.textContent = `${card.value}${card.suit}`;
     cardElement.style.color = ['♥', '♦'].includes(card.suit) ? 'red' : 'black';
     container.appendChild(cardElement);
-    putCardSound.play();
+    setTimeout(() => playSound(putCardSound), 100);
 }
 
 function updateTotals() {
@@ -93,11 +99,12 @@ function updateTotals() {
 
 function checkBlackjack() {
     if (playerTotal === 21) {
-        blackjackSound.play();
+        setTimeout(() => playSound(blackjackSound), 500);
         endGame('Player wins with Blackjack!', currentBet * 2.5);
         return true;
     } else if (dealerTotal === 21) {
-        endGame('Dealer wins with Blackjack!', -currentBet);
+        setTimeout(() => playSound(blackjackSound), 500);
+        endGame('Dealer wins with Blackjack!', 0);
         return true;
     }
     return false;
@@ -144,8 +151,8 @@ function hit() {
     updateTotals();
 
     if (playerTotal > 21) {
-        bustSound.play();
-        endGame('Player busts! Dealer wins.', -currentBet);
+        setTimeout(() => playSound(bustSound), 500);
+        endGame('Player busts! Dealer wins.', 0);
     } else if (playerTotal === 21) {
         stand();
     }
@@ -197,15 +204,17 @@ function dealerPlay() {
 
 function determineWinner() {
     if (dealerTotal > 21) {
-        winSound.play();
+        setTimeout(() => playSound(winSound), 500);
         endGame('Dealer busts! Player wins.', currentBet * 2);
     } else if (dealerTotal > playerTotal) {
-        endGame('Dealer wins!', -currentBet);
+        setTimeout(() => playSound(bustSound), 500);
+        endGame('Dealer wins!', 0);
     } else if (dealerTotal < playerTotal) {
-        winSound.play();
+        setTimeout(() => playSound(winSound), 500);
         endGame('Player wins!', currentBet * 2);
     } else {
-        endGame('It\'s a tie!', 0);
+        setTimeout(() => playSound(tieSound), 500);
+        endGame('It\'s a tie!', currentBet);
     }
 }
 
@@ -268,16 +277,17 @@ function checkPlayerMoney() {
     if (playerMoney === 0) {
         disableBetButtons();
         getFreeMoneyButton.style.display = 'block';
+        messageElement.textContent = "You're out of money! Get free $500 to continue playing.";
     } else {
         enableBetButtons();
     }
 }
 
 function getFreeMoney() {
-    window.open('https://www.youtube.com/channel/UCXzXG83AgqF2jE1IfY8VhWw', '_blank');
     playerMoney += 500;
     playerMoneyElement.textContent = playerMoney;
     checkPlayerMoney();
+    messageElement.textContent = "You received $500! Place your bet to start playing.";
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -295,7 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
     betButtons = document.querySelectorAll('.bet-btn');
 
     getFreeMoneyButton = document.createElement('button');
-    getFreeMoneyButton.textContent = 'Get free 500';
+    getFreeMoneyButton.textContent = 'Get free $500';
     getFreeMoneyButton.style.display = 'none';
     getFreeMoneyButton.addEventListener('click', getFreeMoney);
     document.body.appendChild(getFreeMoneyButton);
