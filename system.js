@@ -31,7 +31,7 @@ const putCardSound = new Audio('audio/PutCard.mp3');
 const bustSound = new Audio('audio/Bust.mp3');
 const winSound = new Audio('audio/YouWin.mp3');
 const blackjackSound = new Audio('audio/BlackJack.mp3');
-const tieSound = new Audio('audio/Tie.mp3');
+;
 
 function playSound(sound) {
     sound.currentTime = 0;
@@ -213,7 +213,7 @@ function determineWinner() {
         setTimeout(() => playSound(winSound), 500);
         endGame('Player wins!', currentBet * 2);
     } else {
-        setTimeout(() => playSound(tieSound), 500);
+        
         endGame('It\'s a tie!', currentBet);
     }
 }
