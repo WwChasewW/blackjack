@@ -31,7 +31,6 @@ const putCardSound = new Audio('audio/PutCard.mp3');
 const bustSound = new Audio('audio/Bust.mp3');
 const winSound = new Audio('audio/YouWin.mp3');
 const blackjackSound = new Audio('audio/BlackJack.mp3');
-;
 
 function playSound(sound) {
     sound.currentTime = 0;
@@ -94,7 +93,14 @@ function updateTotals() {
     playerTotal = calculateHandValue(playerHand);
     dealerTotal = calculateHandValue(dealerHand);
     playerTotalElement.textContent = playerTotal;
-    dealerTotalElement.textContent = dealerTotal;
+
+    // Show dealer's total, but only count the first card if it's the player's turn
+    if (hitButton.disabled && standButton.disabled) {
+        dealerTotalElement.textContent = dealerTotal;
+    } else {
+        const visibleCardValue = calculateHandValue([dealerHand[0]]);
+        dealerTotalElement.textContent = dealerTotal - (calculateHandValue([dealerHand[1]]));
+    }
 }
 
 function checkBlackjack() {
@@ -134,7 +140,6 @@ function startGame() {
     }
 
     updateTotals();
-    dealerTotalElement.textContent = '?';
 
     if (!checkBlackjack()) {
         hitButton.disabled = false;
@@ -142,9 +147,7 @@ function startGame() {
         doubleButton.disabled = false;
         messageElement.textContent = "Player's turn";
     }
-}
-
-function hit() {
+}function hit() {
     const card = dealCard();
     playerHand.push(card);
     renderCard(card, playerHandElement);
@@ -185,7 +188,6 @@ function dealerPlay() {
         renderCard(card, dealerHandElement);
     }
     updateTotals();
-    dealerTotalElement.textContent = dealerTotal;
 
     const dealerTurn = () => {
         if (dealerTotal < 17) {
@@ -201,7 +203,6 @@ function dealerPlay() {
 
     setTimeout(dealerTurn, 1000);
 }
-
 function determineWinner() {
     if (dealerTotal > 21) {
         setTimeout(() => playSound(winSound), 500);
